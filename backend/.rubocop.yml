@@ -4,6 +4,9 @@ require:
 
 AllCops:
   NewCops: enable
+  Exclude:
+    - 'db/**/*'
+    - 'bin/**/*'
 
 Style/Documentation:
   Enabled: false
