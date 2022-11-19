@@ -66,4 +66,7 @@ Rails.application.configure do
 
   Rails.application.routes.default_url_options[:host] = 'localhost'
   Rails.application.routes.default_url_options[:port] = 3000
+
+  # For Next.js
+  config.hosts << 'backend'
 end
