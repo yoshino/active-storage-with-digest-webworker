@@ -24,13 +24,7 @@ const UploadForm: FC = () => {
     let imageBlob;
 
     if (file) {
-      const res = await new DirectUpload(file, "http://localhost:3000/rails/active_storage/direct_uploads", {
-        directUploadWillCreateBlobWithXHR: (xhr) => {
-          // This will decorate the requests with the access token header so you won't get a 401
-          xhr.setRequestHeader("Authorization", "Bearer hoge")
-        }
-      })
-      console.log(res)
+      const res = await new DirectUpload(file, "http://localhost:3000/rails/active_storage/direct_uploads")
 
       try {
         imageBlob = await createUpload(res);
