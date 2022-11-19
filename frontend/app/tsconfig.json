@@ -8,12 +8,19 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
-    "module": "esnext",
+    "module": "CommonJS",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
+    "baseUrl": "./",
+    "paths": {
+      "@rails/activestorage/src/blob_record": ["types/rails__activestorage/blob_record"],
+      "@rails/activestorage/src/blob_upload": ["types/rails__activestorage/blob_upload"],
+      "@rails/activestorage": ["types/rails__activestorage"]
+    },
+    "typeRoots": ["types", "node_modules/@types"],
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
