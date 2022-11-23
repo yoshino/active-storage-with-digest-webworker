@@ -21,18 +21,33 @@ const UploadForm: FC = () => {
   }
 
   const upload = async () => {
-    let imageBlob;
+    let imageBlob: any;
 
     if (file) {
       const res = await new DirectUpload(file, "http://localhost:3000/rails/active_storage/direct_uploads")
 
       try {
         imageBlob = await createUpload(res);
+        console.log('signed_id: ', imageBlob.signed_id)
       } catch (err) {
         throw err;
       }
     }
-    console.log('blob: ', imageBlob)
+
+    try {
+      const putRespponse = await fetch('http://localhost:3000/cats/1/image', {
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json, */*',
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify({ id: 1, image: imageBlob.signed_id })
+      })
+      console.log(JSON.stringify({ id: 1, image: imageBlob.signed_id }))
+      console.log(putRespponse)
+    } catch (err) {
+      throw err
+    }
   }
 
   return (
