@@ -1,5 +1,5 @@
-import styles from '../styles/Home.module.css'
-import UploadForm from '../components/UploadForm'
+import UploadForm from '@components/UploadForm'
+import styles from '@styles/Home.module.css'
 
 export default function Home() {
   return (

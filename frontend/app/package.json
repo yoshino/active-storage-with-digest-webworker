@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint:fix": "eslint --fix './src/**/*.{js,ts,jsx,tsx}'",
+    "format": "prettier --config .prettierrc --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx,json}'"
   },
   "dependencies": {
     "@rails/activestorage": "^7.0.4",
@@ -23,6 +25,8 @@
   },
   "devDependencies": {
     "@types/rails__activestorage": "^7.0.1",
-    "@types/spark-md5": "^3.0.2"
+    "@types/spark-md5": "^3.0.2",
+    "eslint-config-prettier": "^8.5.0",
+    "prettier": "^2.8.0"
   }
 }

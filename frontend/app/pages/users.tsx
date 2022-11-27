@@ -17,28 +17,28 @@ type Props = {
   users: User[]
 }
 
-const Users: FC<Props> = ({
-  users
-}) => {
+const Users: FC<Props> = ({ users }) => {
   return (
-      <div>
-        <h1>Users</h1>
-        <ul>
-          {users.map((user) =>
-            <li key={user.id}>{user.name}({user.age})</li>
-          )}
-        </ul>
+    <div>
+      <h1>Users</h1>
+      <ul>
+        {users.map((user) => (
+          <li key={user.id}>
+            {user.name}({user.age})
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }
 
 export const getStaticProps = async () => {
-  const response = await fetch("http://backend:3000/users")
+  const response = await fetch('http://backend:3000/users')
   const responseJson: Response = await response.json()
 
   return {
     props: {
-      users: responseJson.data
+      users: responseJson.data,
     },
   }
 }

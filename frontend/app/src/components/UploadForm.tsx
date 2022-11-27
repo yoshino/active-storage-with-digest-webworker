@@ -1,5 +1,5 @@
-import { FC, useEffect, useState } from 'react'
 import { DirectUpload } from '@rails/activestorage'
+import { FC, useEffect, useState } from 'react'
 
 const UploadForm: FC = () => {
   const [file, setFile] = useState<File | null>(null)
@@ -14,23 +14,26 @@ const UploadForm: FC = () => {
   function createUpload(up: any) {
     return new Promise((resolve, reject) => {
       up.create((err: Error, blob: any) => {
-        if (err) reject(err);
-        else resolve(blob);
-      });
-    });
+        if (err) reject(err)
+        else resolve(blob)
+      })
+    })
   }
 
   const upload = async () => {
-    let imageBlob: any;
+    let imageBlob: any
 
     if (file) {
-      const res = await new DirectUpload(file, "http://localhost:3000/rails/active_storage/direct_uploads")
+      const res = await new DirectUpload(
+        file,
+        'http://localhost:3000/rails/active_storage/direct_uploads',
+      )
 
       try {
-        imageBlob = await createUpload(res);
+        imageBlob = await createUpload(res)
         console.log('signed_id: ', imageBlob.signed_id)
       } catch (err) {
-        throw err;
+        throw err
       }
     }
 
@@ -38,10 +41,10 @@ const UploadForm: FC = () => {
       const putRespponse = await fetch('http://localhost:3000/cats/1/image', {
         method: 'PUT',
         headers: {
-          'Accept': 'application/json, */*',
-          'Content-type': 'application/json'
+          Accept: 'application/json, */*',
+          'Content-type': 'application/json',
         },
-        body: JSON.stringify({ id: 1, image: imageBlob.signed_id })
+        body: JSON.stringify({ id: 1, image: imageBlob.signed_id }),
       })
       console.log(JSON.stringify({ id: 1, image: imageBlob.signed_id }))
       console.log(putRespponse)
@@ -51,18 +54,13 @@ const UploadForm: FC = () => {
   }
 
   return (
-    <div className="App">
-      <div className="App-form">
-        <input
-          name="file"
-          type="file"
-          accept="image/*"
-          onChange={onChangeFile}
-        />
-        <input type="button" disabled={!file} value="submit" onClick={() => upload()} />
+    <div className='App'>
+      <div className='App-form'>
+        <input name='file' type='file' accept='image/*' onChange={onChangeFile} />
+        <input type='button' disabled={!file} value='submit' onClick={() => upload()} />
       </div>
     </div>
   )
 }
 
-export default UploadForm;
+export default UploadForm

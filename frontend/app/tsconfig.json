@@ -14,13 +14,12 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "baseUrl": "./",
-    "paths": {
-      "@rails/activestorage/src/blob_record": ["types/rails__activestorage/blob_record"],
-      "@rails/activestorage/src/blob_upload": ["types/rails__activestorage/blob_upload"],
-      "@rails/activestorage": ["types/rails__activestorage"]
-    },
     "typeRoots": ["types", "node_modules/@types"],
+    "baseUrl": "src",
+    "paths": {
+      "@components/*": ["components/*"],
+      "@styles/*": ["styles/*"]
+    }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
