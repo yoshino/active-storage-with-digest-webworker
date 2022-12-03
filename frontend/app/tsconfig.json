@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ES2015",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -14,7 +14,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "typeRoots": ["types", "node_modules/@types"],
+    "typeRoots": ["src/types", "node_modules/@types"],
     "baseUrl": "src",
     "paths": {
       "@components/*": ["components/*"],
