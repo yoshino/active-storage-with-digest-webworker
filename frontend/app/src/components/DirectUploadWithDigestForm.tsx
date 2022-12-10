@@ -2,7 +2,7 @@ import { DirectUpload } from '@rails/activestorage'
 import { FC, useState } from 'react'
 
 const DIRECT_UPLOAD_URL = 'http://localhost:3000/rails/active_storage/direct_uploads'
-const ATTACHEMTN_URL = 'http://localhost:3000/cats/1/image'
+const ATTACHMENT_URL = 'http://localhost:3000/cats/1/image'
 
 const UploadForm: FC = () => {
   const [file, setFile] = useState<File>()
@@ -33,7 +33,7 @@ const UploadForm: FC = () => {
     const directUpload = await new DirectUpload(file, DIRECT_UPLOAD_URL)
 
     const directUploadResponse: any = await createDirectUpload(directUpload)
-    await fetch(ATTACHEMTN_URL, {
+    await fetch(ATTACHMENT_URL, {
       method: 'PUT',
       headers: {
         Accept: 'application/json, */*',

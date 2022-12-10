@@ -8,7 +8,7 @@ type Prop = {
 }
 
 const DIRECT_UPLOAD_URL = 'http://localhost:3000/rails/active_storage/direct_uploads'
-const ATTACHEMTN_URL = 'http://localhost:3000/cats/1/image'
+const ATTACHMENT_URL = 'http://localhost:3000/cats/1/image'
 
 const DirectUploadForm: FC<Prop> = ({ digest, workerRef }) => {
   const [file, setFile] = useState<File>()
@@ -41,7 +41,7 @@ const DirectUploadForm: FC<Prop> = ({ digest, workerRef }) => {
 
     createDirectUpload(directUpload)
       .then((directUploadResponse: any) => {
-        fetch(ATTACHEMTN_URL, {
+        fetch(ATTACHMENT_URL, {
           method: 'PUT',
           headers: { Accept: 'application/json, */*', 'Content-type': 'application/json' },
           body: JSON.stringify({ id: 1, image: directUploadResponse.signed_id }),
