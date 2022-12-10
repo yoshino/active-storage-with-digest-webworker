@@ -6,7 +6,7 @@ import DirectUploadWithDigestForm from 'components/DirectUploadWithDigestForm'
 const Home: FC = () => {
   // Hash Wasm
   const hashWasmWorkerRef = useRef<Worker>()
-  const [hashWasmDigest, setHashWasmDigest] = useState<string>('')
+  const [hashWasmDigest, setHashWasmDigest] = useState<string>()
   const [hashWasmTime, setHashWasmTime] = useState<number>()
 
   useEffect(() => {
@@ -25,12 +25,12 @@ const Home: FC = () => {
 
   // Spark MD5
   const sparkMD5WorkerRef = useRef<Worker>()
-  const [sparkMD5Digest, setSparkMD5Digest] = useState<string>('')
+  const [sparkMD5Digest, setSparkMD5Digest] = useState<string>()
   const [sparkMD5Time, setSparkMD5Time] = useState<number>()
 
   useEffect(() => {
     sparkMD5WorkerRef.current = new Worker(
-      new URL('../src/workers/calculate-digest-hash-wasm', import.meta.url),
+      new URL('../src/workers/calculate-digest-spark-md5', import.meta.url),
     )
     sparkMD5WorkerRef.current.onmessage = (event: MessageEvent<File>) => {
       const result: any = event.data
@@ -58,7 +58,7 @@ const Home: FC = () => {
         <DirectUploadForm digest={sparkMD5Digest} workerRef={sparkMD5WorkerRef} />
       </div>
       <div>
-        <h3>Active Storage digest when upload</h3>
+        <h3>Active Storage (digest in library method)</h3>
         <DirectUploadWithDigestForm />
       </div>
     </>

@@ -1,11 +1,14 @@
-import { FC, useState } from 'react'
+import { FC, useState, MutableRefObject } from 'react'
 
 import { DirectUpload } from 'libs/direct-upload'
 
 type Prop = {
-  digest: string
-  workerRef: any
+  digest: string | undefined
+  workerRef: MutableRefObject<Worker | undefined>
 }
+
+const DIRECT_UPLOAD_URL = 'http://localhost:3000/rails/active_storage/direct_uploads'
+const ATTACHEMTN_URL = 'http://localhost:3000/cats/1/image'
 
 const DirectUploadForm: FC<Prop> = ({ digest, workerRef }) => {
   const [file, setFile] = useState<File>()
@@ -29,32 +32,28 @@ const DirectUploadForm: FC<Prop> = ({ digest, workerRef }) => {
   }
 
   const upload = async () => {
-    if (!file) {
-      throw new Error('file not found')
+    if (!file || !digest) {
+      throw new Error('File Not Found')
     }
 
     const start = performance.now()
-    const directUpload = await new DirectUpload(
-      file,
-      'http://localhost:3000/rails/active_storage/direct_uploads',
-      digest,
-    )
+    const directUpload = await new DirectUpload(file, DIRECT_UPLOAD_URL, digest)
 
-    const directUploadResponse: any = await createDirectUpload(directUpload)
-    await fetch('http://localhost:3000/cats/1/image', {
-      method: 'PUT',
-      headers: {
-        Accept: 'application/json, */*',
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify({ id: 1, image: directUploadResponse.signed_id }),
-    }).catch((e) => {
-      console.log(e)
-      throw new Error('upload error')
-    })
-
-    const end = performance.now()
-    setUploadTime(end - start)
+    createDirectUpload(directUpload)
+      .then((directUploadResponse: any) => {
+        fetch(ATTACHEMTN_URL, {
+          method: 'PUT',
+          headers: { Accept: 'application/json, */*', 'Content-type': 'application/json' },
+          body: JSON.stringify({ id: 1, image: directUploadResponse.signed_id }),
+        })
+      })
+      .then(() => {
+        const end = performance.now()
+        setUploadTime(end - start)
+      })
+      .catch((e: Error) => {
+        console.log(e)
+      })
   }
 
   return (

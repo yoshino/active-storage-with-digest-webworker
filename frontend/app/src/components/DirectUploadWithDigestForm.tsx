@@ -1,6 +1,9 @@
 import { DirectUpload } from '@rails/activestorage'
 import { FC, useState } from 'react'
 
+const DIRECT_UPLOAD_URL = 'http://localhost:3000/rails/active_storage/direct_uploads'
+const ATTACHEMTN_URL = 'http://localhost:3000/cats/1/image'
+
 const UploadForm: FC = () => {
   const [file, setFile] = useState<File>()
   const [uploadTime, setUploadTime] = useState<number>()
@@ -27,26 +30,25 @@ const UploadForm: FC = () => {
     }
 
     const start = performance.now()
-    const directUpload = await new DirectUpload(
-      file,
-      'http://localhost:3000/rails/active_storage/direct_uploads',
-    )
+    const directUpload = await new DirectUpload(file, DIRECT_UPLOAD_URL)
 
     const directUploadResponse: any = await createDirectUpload(directUpload)
-    await fetch('http://localhost:3000/cats/1/image', {
+    await fetch(ATTACHEMTN_URL, {
       method: 'PUT',
       headers: {
         Accept: 'application/json, */*',
         'Content-type': 'application/json',
       },
       body: JSON.stringify({ id: 1, image: directUploadResponse.signed_id }),
-    }).catch((e) => {
-      console.log(e)
-      throw new Error('upload error')
     })
-
-    const end = performance.now()
-    setUploadTime(end - start)
+      .then(() => {
+        const end = performance.now()
+        setUploadTime(end - start)
+      })
+      .catch((e) => {
+        console.log(e)
+        throw new Error('upload error')
+      })
   }
 
   return (
